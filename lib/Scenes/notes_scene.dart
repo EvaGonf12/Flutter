@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class NotesListView extends StatefulWidget {
+  // Data
   final Notebook _model;
 
+  // Constructor
   const NotesListView(Notebook model) : _model = model;
 
+  // State
   @override
   _NotesListViewState createState() => _NotesListViewState();
 }

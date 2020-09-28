@@ -22,8 +22,8 @@ void main() {
 
   group("contents", () {
     test("length behaves correctly", () {
-      final nb = Notebook();
-      final nb2 = Notebook();
+      final nb = Notebook.generate();
+      final nb2 = Notebook.generate();
       final n = Note("Lorem Ipsum");
 
       expect(nb.length, 0);
