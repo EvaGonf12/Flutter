@@ -1,0 +1,4 @@
+#Fri Sep 25 22:05:11 CEST 2020
+base.0=/home/fernando/code/curso-flutter/ed1/everpobre/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
