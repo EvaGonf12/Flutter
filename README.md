@@ -43,4 +43,4 @@ Consta de dos partes, la primera obligatoria, y la segunda opcional (para aquell
 ### OPCIONAL
 
 1. Crea un Widget de detalle de Note que permita editar su contenido.
-1. Mira la documentación de `EditableText` para ver como implementar texto editable (es muy similar a iOS).
+1. Mira la documentación de `EditableText` para ver como implementar texto editable (es muy similar a iOS).# Flutter
