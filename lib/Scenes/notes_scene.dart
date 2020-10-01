@@ -1,4 +1,6 @@
+import 'package:everpobre/domain/note.dart';
 import 'package:everpobre/domain/notebook.dart';
+import 'package:everpobre/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -33,11 +35,29 @@ class _NotesListViewState extends State<NotesListView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: widget._model.length,
-      itemBuilder: (context, index) {
-        return NoteSliver(widget._model, index);
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget._model.title,
+          style: const TextStyle(color: Colors.black),
+        ),
+      ),
+      body: ListView.builder(
+        itemCount: widget._model.length,
+        itemBuilder: (context, index) {
+          return NoteSliver(widget._model, index);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFFbbb5c3),
+        onPressed: () {
+          widget._model.add(Note("Nueva nota"));
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
+      ),
     );
   }
 }
@@ -57,7 +77,7 @@ class NoteSliver extends StatefulWidget {
 class _NoteSliverState extends State<NoteSliver> {
   @override
   Widget build(BuildContext context) {
-    DateFormat fmt = DateFormat("yyyy-mm-dd");
+    final DateFormat fmt = DateFormat("yyyy-mm-dd");
 
     return Dismissible(
       key: UniqueKey(),
@@ -74,12 +94,21 @@ class _NoteSliverState extends State<NoteSliver> {
       background: Container(
         color: Colors.red,
       ),
-      child: Card(
-        child: ListTile(
-          leading: const Icon(Icons.toc),
-          title: Text(widget.notebook[widget.index].body),
-          subtitle:
-              Text(fmt.format(widget.notebook[widget.index].modificationDate)),
+      child: GestureDetector(
+        onTap: () => {
+          Navigator.pushNamed(
+            context,
+            RouteNames.routeNoteDetails,
+            arguments: widget.notebook[widget.index],
+          ),
+        },
+        child: Card(
+          child: ListTile(
+            leading: const Icon(Icons.toc),
+            title: Text(widget.notebook[widget.index].body),
+            subtitle: Text(
+                fmt.format(widget.notebook[widget.index].modificationDate)),
+          ),
         ),
       ),
     );

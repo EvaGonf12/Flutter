@@ -1,4 +1,6 @@
+import 'package:everpobre/domain/notebook.dart';
 import 'package:everpobre/domain/notebooks.dart';
+import 'package:everpobre/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -32,11 +34,29 @@ class _NotebooksListViewState extends State<NotebooksListView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: widget._model.length,
-      itemBuilder: (context, index) {
-        return NotebookSliver(widget._model, index);
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget._model.title,
+          style: const TextStyle(color: Colors.black),
+        ),
+      ),
+      body: ListView.builder(
+        itemCount: widget._model.length,
+        itemBuilder: (context, index) {
+          return NotebookSliver(widget._model, index);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFFbbb5c3),
+        onPressed: () {
+          widget._model.add(Notebook.generate());
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
+      ),
     );
   }
 }
@@ -49,10 +69,12 @@ class NotebookSliver extends StatefulWidget {
       : this.notebooks = notebooks,
         this.index = index;
 
+  @override
   _NotebookSliverState createState() => _NotebookSliverState();
 }
 
 class _NotebookSliverState extends State<NotebookSliver> {
+  @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: UniqueKey(),
@@ -69,12 +91,15 @@ class _NotebookSliverState extends State<NotebookSliver> {
       background: Container(
         color: Colors.red,
       ),
-      child: Card(
-        child: ListTile(
-          leading: const Icon(Icons.book),
-          title: Text(widget.notebooks[widget.index].title),
-          subtitle: Text(widget.notebooks[widget.index].description),
-          isThreeLine: true,
+      child: GestureDetector(
+        onTap: () => {Navigator.pushNamed(context, RouteNames.routeNotes)},
+        child: Card(
+          child: ListTile(
+            leading: const Icon(Icons.book),
+            title: Text(widget.notebooks[widget.index].title),
+            subtitle: Text(widget.notebooks[widget.index].description),
+            isThreeLine: true,
+          ),
         ),
       ),
     );

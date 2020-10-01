@@ -1,8 +1,11 @@
 import 'package:everpobre/domain/notebook.dart';
 import 'package:flutter/material.dart';
+import 'package:everpobre/routes.dart';
 
 class Notebooks with ChangeNotifier {
   // Data
+  static final routeName = RouteNames.routeNotebooks;
+
   String _title = "";
   final List<Notebook> _notebooks = [];
 

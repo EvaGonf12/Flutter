@@ -1,6 +1,7 @@
 import 'package:everpobre/extensions/date_time.dart';
+import 'package:flutter/material.dart';
 
-class Note {
+class Note with ChangeNotifier {
   // Fields
   String _body = "";
 
@@ -56,4 +57,9 @@ class Note {
   /* Encasquetar ChangeNotifier y llamar a notifyListeners() cuando algo cambia
   */
 
+  // Mutadores
+  void editData(String newBody) {
+    _body = newBody;
+    notifyListeners();
+  }
 }
