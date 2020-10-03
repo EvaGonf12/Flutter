@@ -1,6 +1,6 @@
 abstract class RouteNames {
-  static final mainRoute = "/Everpobre";
-  static final routeNotebooks = "/Notebooks";
-  static final routeNotes = "/Notes";
-  static final routeNoteDetails = "/NoteDetails";
+  static const mainRoute = "/Everpobre";
+  static const routeNotebooks = "/Notebooks";
+  static const routeNotes = "/Notes";
+  static const routeNoteDetails = "/NoteDetails";
 }

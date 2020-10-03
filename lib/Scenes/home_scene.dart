@@ -3,20 +3,24 @@ import 'package:everpobre/text_resources.dart';
 import 'package:flutter/material.dart';
 
 class EverpobreHome extends StatelessWidget {
-  static final routeName = RouteNames.mainRoute;
+  static const routeName = RouteNames.mainRoute;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(TextResources.appName),
+        title: Text(
+          TextResources.appName,
+          style: const TextStyle(color: Colors.black),
+        ),
       ),
       body: Center(
         child: RaisedButton(
           onPressed: () {
             Navigator.pushNamed(context, RouteNames.routeNotebooks);
           },
-          child: const Text("Show Notebooks"),
+          child: const Text("Ver Notebooks",
+              style: TextStyle(color: Colors.white)),
         ),
       ),
     );

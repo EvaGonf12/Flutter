@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 typedef ChangeValueCallback = void Function(String value);
 
 class NoteDetails extends StatefulWidget {
-  static final routeName = RouteNames.routeNoteDetails;
+  static const routeName = RouteNames.routeNoteDetails;
   FocusNode textFocusNode = FocusNode();
   // State
   @override
@@ -15,6 +15,9 @@ class NoteDetails extends StatefulWidget {
 
 class _NoteDetailsState extends State<NoteDetails> {
   final TextEditingController _controller = TextEditingController();
+
+  String _value = "";
+  bool _validate = true;
 
   @override
   void dispose() {
@@ -25,28 +28,74 @@ class _NoteDetailsState extends State<NoteDetails> {
   @override
   Widget build(BuildContext context) {
     final Note _nota = ModalRoute.of(context).settings.arguments as Note;
-
     return keyboardDismisser(
         context: context,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text("Note Details"),
+            title: const Text(
+              "Detalle",
+              style: TextStyle(color: Colors.black),
+            ),
+            iconTheme: const IconThemeData(
+              color: Colors.black,
+            ),
           ),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Wrap(spacing: 10, runSpacing: 10, children: [
-              const Text(
-                "Descripción: ",
-                style: TextStyle(fontSize: 17.0, color: Colors.grey),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: const Text(
+                  "Descripción:",
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+              Text(
+                _nota.body,
+                style: const TextStyle(
+                  fontSize: 17.0,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.grey,
+                ),
               ),
               CustomTextField(
                 controller: _controller,
                 text: _nota.body,
+                validate: _validate,
                 onChangeValue: (value) {
-                  _nota.editData(value);
-                  Navigator.pop(context);
+                  _validate = true;
+                  setState(() {});
+                  _value = value;
                 },
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Center(
+                  child: RaisedButton(
+                    onPressed: () {
+                      if (_controller.text.isEmpty) {
+                        _validate = false;
+                        setState(() {});
+                      } else {
+                        _validate = true;
+                        _nota.editData(_value);
+                        setState(() {});
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const Text(
+                      "Actualizar",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              )
             ]),
           ),
         ));
@@ -67,55 +116,29 @@ class CustomTextField extends StatelessWidget {
   final String _text;
   final ChangeValueCallback _onChangeValue;
   final TextEditingController _controller;
+  final bool _validate;
 
   const CustomTextField(
       {TextEditingController controller,
       String text,
+      bool validate,
       ChangeValueCallback onChangeValue})
       : _text = text,
+        _validate = validate,
         _controller = controller,
         _onChangeValue = onChangeValue;
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        cupertinoOverrideTheme: const CupertinoThemeData(
-          primaryColor: Color(0xFFba68c8),
-        ),
-        primaryColor: const Color(0xFFba68c8),
-        accentColor: const Color(0xFFba68c8),
-        hintColor: Colors.grey,
-        cursorColor: const Color(0xFFba68c8),
-        focusColor: const Color(0xFFba68c8),
+    return TextField(
+      controller: _controller,
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        labelText: _text,
+        hintText: "Modificar descripción de la nota",
+        errorText: _validate ? null : "Este valor no puede estar vacío",
       ),
-      child: TextField(
-          controller: _controller,
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: _text,
-            hintText: "Modifica la nota",
-          ),
-          onSubmitted: (String value) async {
-            await showDialog<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Nota actualizada'),
-                  content:
-                      const Text('La nota se ha actualizado correctamente'),
-                  actions: <Widget>[
-                    FlatButton(
-                      onPressed: () {
-                        _onChangeValue(value);
-                      },
-                      child: const Text('OK'),
-                    ),
-                  ],
-                );
-              },
-            );
-          }),
+      onChanged: _onChangeValue,
     );
   }
 }

@@ -16,13 +16,13 @@ class Notebook with ChangeNotifier {
   Notebook(String title, String description) {
     _title = title;
     _description = description;
-    _notes.addAll(List.generate(12, (index) => Note("Item $index")));
+    _notes.addAll(List.generate(1, (index) => Note("Item $index")));
   }
 
   Notebook.generate() {
-    _title = "Título del Notebook ";
+    _title = "Título";
     _description = "Este es un breve resumen del Notebook";
-    _notes.addAll(List.generate(12, (index) => Note("Item $index")));
+    _notes.addAll(List.generate(1, (index) => Note("Item $index")));
   }
 
   // Accesores

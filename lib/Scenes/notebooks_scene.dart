@@ -2,7 +2,6 @@ import 'package:everpobre/domain/notebook.dart';
 import 'package:everpobre/domain/notebooks.dart';
 import 'package:everpobre/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class NotebooksListView extends StatefulWidget {
   // Data
@@ -36,9 +35,12 @@ class _NotebooksListViewState extends State<NotebooksListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget._model.title,
-          style: const TextStyle(color: Colors.black),
+        title: const Text(
+          "Listado de Notebooks",
+          style: TextStyle(color: Colors.black),
+        ),
+        iconTheme: const IconThemeData(
+          color: Colors.black,
         ),
       ),
       body: ListView.builder(
@@ -48,7 +50,7 @@ class _NotebooksListViewState extends State<NotebooksListView> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFbbb5c3),
+        backgroundColor: const Color(0xFFffeb3b),
         onPressed: () {
           widget._model.add(Notebook.generate());
         },
@@ -91,14 +93,18 @@ class _NotebookSliverState extends State<NotebookSliver> {
       background: Container(
         color: Colors.red,
       ),
-      child: GestureDetector(
-        onTap: () => {Navigator.pushNamed(context, RouteNames.routeNotes)},
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5.0, left: 10, right: 10),
         child: Card(
-          child: ListTile(
-            leading: const Icon(Icons.book),
-            title: Text(widget.notebooks[widget.index].title),
-            subtitle: Text(widget.notebooks[widget.index].description),
-            isThreeLine: true,
+          child: InkWell(
+            onTap: () => {Navigator.pushNamed(context, RouteNames.routeNotes)},
+            highlightColor: Colors.grey[300],
+            child: ListTile(
+              leading: const Icon(Icons.book),
+              title: Text(widget.notebooks[widget.index].title),
+              subtitle: Text(widget.notebooks[widget.index].description),
+              isThreeLine: true,
+            ),
           ),
         ),
       ),

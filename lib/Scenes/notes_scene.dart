@@ -38,8 +38,11 @@ class _NotesListViewState extends State<NotesListView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget._model.title,
+          "Notas de '${widget._model.title}'",
           style: const TextStyle(color: Colors.black),
+        ),
+        iconTheme: const IconThemeData(
+          color: Colors.black,
         ),
       ),
       body: ListView.builder(
@@ -49,7 +52,7 @@ class _NotesListViewState extends State<NotesListView> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFbbb5c3),
+        backgroundColor: const Color(0xFFffeb3b),
         onPressed: () {
           widget._model.add(Note("Nueva nota"));
         },
@@ -94,20 +97,24 @@ class _NoteSliverState extends State<NoteSliver> {
       background: Container(
         color: Colors.red,
       ),
-      child: GestureDetector(
-        onTap: () => {
-          Navigator.pushNamed(
-            context,
-            RouteNames.routeNoteDetails,
-            arguments: widget.notebook[widget.index],
-          ),
-        },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5.0, left: 10, right: 10),
         child: Card(
-          child: ListTile(
-            leading: const Icon(Icons.toc),
-            title: Text(widget.notebook[widget.index].body),
-            subtitle: Text(
-                fmt.format(widget.notebook[widget.index].modificationDate)),
+          child: InkWell(
+            onTap: () => {
+              Navigator.pushNamed(
+                context,
+                RouteNames.routeNoteDetails,
+                arguments: widget.notebook[widget.index],
+              ).then((value) => {setState(() {})}),
+            },
+            highlightColor: Colors.grey[300],
+            child: ListTile(
+              leading: const Icon(Icons.toc),
+              title: Text(widget.notebook[widget.index].body),
+              subtitle: Text(
+                  fmt.format(widget.notebook[widget.index].modificationDate)),
+            ),
           ),
         ),
       ),

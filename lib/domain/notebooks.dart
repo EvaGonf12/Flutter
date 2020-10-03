@@ -17,7 +17,7 @@ class Notebooks with ChangeNotifier {
 
   Notebooks.generate() {
     _title = "Notebooks";
-    _notebooks.addAll(List.generate(2, (index) => Notebook.generate()));
+    _notebooks.addAll(List.generate(1, (index) => Notebook.generate()));
   }
 
   // Accesores
